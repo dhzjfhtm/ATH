@@ -20,4 +20,7 @@ func main() {
 		fmt.Println(err)
 	}
 	fmt.Println("BTC :", price, "$")
+
+	account := binanceClient.GetBinanceAccount()
+	fmt.Println("Balance :", account.Balances)
 }

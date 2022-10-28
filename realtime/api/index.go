@@ -27,6 +27,16 @@ func NewBinanceClient() *BinanceClient {
 	}
 }
 
+// Get Account
+func (bc *BinanceClient) GetBinanceAccount() *binance.Account {
+	balances, err := bc.Client.NewGetAccountService().Do(context.Background())
+	if err != nil {
+		panic(err)
+	}
+
+	return balances
+}
+
 func GetBinanceSpotPrice(coin string, client *binance.Client) (string, error) {
 	// get binance spot price
 	tickerPrice, err := client.NewListPricesService().Symbol(coin).Do(context.Background())
