@@ -9,7 +9,7 @@ import (
 func main() {
 	binanceClient := api.NewBinanceClient()
 
-	price, err := api.GetBinanceSpotPrice("BTCUSDT", binanceClient)
+	price, err := api.GetBinanceSpotPrice("BTCUSDT", binanceClient.Client)
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -10,9 +10,10 @@ type BinanceClient struct {
 	Client *binance.Client
 }
 
-// make binance client
-func NewBinanceClient() *binance.Client {
-	return binance.NewClient("", "")
+func NewBinanceClient() *BinanceClient {
+	return &BinanceClient{
+		Client: binance.NewClient("", ""),
+	}
 }
 
 func GetBinanceSpotPrice(coin string, client *binance.Client) (string, error) {
