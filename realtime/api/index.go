@@ -2,8 +2,14 @@ package api
 
 import (
 	"context"
+	"os"
 
 	"github.com/adshao/go-binance/v2"
+)
+
+var (
+	apiKey    = os.Getenv("BINANCE_API_KEY")
+	secretKey = os.Getenv("BINANCE_API_SECRET")
 )
 
 type BinanceClient struct {
@@ -11,8 +17,13 @@ type BinanceClient struct {
 }
 
 func NewBinanceClient() *BinanceClient {
+	if apiKey == "" || secretKey == "" {
+		apiKey = os.Getenv("BINANCE_API_KEY")
+		secretKey = os.Getenv("BINANCE_API_SECRET")
+	}
+
 	return &BinanceClient{
-		Client: binance.NewClient("", ""),
+		Client: binance.NewClient(apiKey, secretKey),
 	}
 }
 
