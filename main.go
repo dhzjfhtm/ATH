@@ -22,5 +22,10 @@ func main() {
 	fmt.Println("BTC :", price, "$")
 
 	account := binanceClient.GetBinanceAccount()
-	fmt.Println("Balance :", account.Balances)
+	balances := account.Balances
+	for _, balance := range balances {
+		if balance.Free != "0.00000000" {
+			fmt.Println(balance.Asset, ":", balance.Free)
+		}
+	}
 }
