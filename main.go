@@ -1,10 +1,8 @@
 package main
 
 import (
-	"context"
 	"fmt"
 
-	"github.com/adshao/go-binance/v2"
 	"github.com/dhzjfhtm/ATH/realtime/api"
 	"github.com/joho/godotenv"
 )
@@ -17,7 +15,7 @@ func main() {
 
 	binanceClient := api.NewBinanceClient()
 
-	price, err := api.GetBinanceSpotPrice("BTCUSDT", binanceClient.Client)
+	price, err := binanceClient.GetBinanceSpotPrice("BTCUSDT")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -31,10 +29,7 @@ func main() {
 		}
 	}
 
-	order, err := binanceClient.Client.NewCreateOrderService().Symbol("KLAYUSDT").
-		Side(binance.SideTypeBuy).Type(binance.OrderTypeLimit).
-		TimeInForce(binance.TimeInForceTypeGTC).Quantity("40").
-		Price("0.26").Do(context.Background())
+	order, err := binanceClient.NewBinanceSpotOrder("KLAYUSDT", "BUY", "LIMIT", "40", "0.26")
 	if err != nil {
 		fmt.Println(err)
 		return

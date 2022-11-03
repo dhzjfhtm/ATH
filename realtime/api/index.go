@@ -13,7 +13,7 @@ var (
 )
 
 type BinanceClient struct {
-	Client *binance.Client
+	client *binance.Client
 }
 
 func NewBinanceClient() *BinanceClient {
@@ -23,13 +23,13 @@ func NewBinanceClient() *BinanceClient {
 	}
 
 	return &BinanceClient{
-		Client: binance.NewClient(apiKey, secretKey),
+		client: binance.NewClient(apiKey, secretKey),
 	}
 }
 
 // Get Account
 func (bc *BinanceClient) GetBinanceAccount() *binance.Account {
-	balances, err := bc.Client.NewGetAccountService().Do(context.Background())
+	balances, err := bc.client.NewGetAccountService().Do(context.Background())
 	if err != nil {
 		panic(err)
 	}
@@ -37,11 +37,23 @@ func (bc *BinanceClient) GetBinanceAccount() *binance.Account {
 	return balances
 }
 
-func GetBinanceSpotPrice(coin string, client *binance.Client) (string, error) {
+func (bc *BinanceClient) GetBinanceSpotPrice(coin string) (string, error) {
 	// get binance spot price
-	tickerPrice, err := client.NewListPricesService().Symbol(coin).Do(context.Background())
+	tickerPrice, err := bc.client.NewListPricesService().Symbol(coin).Do(context.Background())
 	if err != nil {
 		return "", err
 	}
 	return tickerPrice[0].Price, nil
+}
+
+func (bc *BinanceClient) NewBinanceSpotOrder(symbol, side, orderType, quantity, price string) (*binance.CreateOrderResponse, error) {
+	order, err := bc.client.NewCreateOrderService().Symbol(symbol).
+		Side(binance.SideType(side)).Type(binance.OrderType(orderType)).
+		TimeInForce(binance.TimeInForceTypeGTC).Quantity(quantity).
+		Price(price).Do(context.Background())
+	if err != nil {
+		return nil, err
+	}
+
+	return order, nil
 }
