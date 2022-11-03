@@ -13,15 +13,15 @@ func main() {
 		fmt.Println("Error loading .env file")
 	}
 
-	binanceClient := api.NewBinanceSpot()
+	binanceSpot := api.NewBinanceSpot()
 
-	price, err := binanceClient.GetBinanceSpotPrice("BTCUSDT")
+	price, err := binanceSpot.GetBinanceSpotPrice("BTCUSDT")
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Println("BTC :", price, "$")
 
-	account := binanceClient.GetBinanceSpotAccount()
+	account := binanceSpot.GetBinanceSpotAccount()
 	balances := account.Balances
 	for _, balance := range balances {
 		if balance.Free != "0.00000000" {
@@ -29,7 +29,7 @@ func main() {
 		}
 	}
 
-	order, err := binanceClient.NewBinanceSpotOrder("KLAYUSDT", "BUY", "LIMIT", "40", "0.26")
+	order, err := binanceSpot.NewBinanceSpotOrder("KLAYUSDT", "BUY", "LIMIT", "40", "0.26")
 	if err != nil {
 		fmt.Println(err)
 		return
