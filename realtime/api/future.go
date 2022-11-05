@@ -97,3 +97,14 @@ func (bf *BinanceFuture) GetPositionRisk(symbol string) ([]*futures.PositionRisk
 
 	return positionRisk, nil
 }
+
+// get all position risks
+func (bf *BinanceFuture) GetAllPositionRisk() ([]*futures.PositionRisk, error) {
+	positionRisk, err := bf.client.NewGetPositionRiskService().Do(context.Background())
+	if err != nil {
+		bf.logger.Error("GetAllPositionRisk", err)
+		return nil, err
+	}
+
+	return positionRisk, nil
+}
