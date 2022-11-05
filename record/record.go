@@ -22,10 +22,10 @@ func NewLogger() *Logger {
 	}
 }
 
-func (l *Logger) Info(msg string) {
+func (l *Logger) Info(msg ...string) {
 	l.logger.Println("INFO", msg)
 }
 
-func (l *Logger) Error(msg string) {
-	l.logger.Println("Error ", msg)
+func (l *Logger) Error(name string, err error) {
+	l.logger.Println("Error ", name, err)
 }

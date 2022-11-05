@@ -5,10 +5,11 @@ import (
 
 	"github.com/adshao/go-binance/v2/futures"
 	"github.com/dhzjfhtm/ATH/realtime/api"
+	"github.com/dhzjfhtm/ATH/record"
 )
 
-func FutureTrade() {
-	binanceFuture := api.NewBinanceFuture()
+func FutureTrade(logger *record.Logger) {
+	binanceFuture := api.NewBinanceFuture(logger)
 
 	price, err := binanceFuture.GetBinanceFuturePrice("XRPUSDT")
 	if err != nil {
@@ -36,8 +37,8 @@ func FutureTrade() {
 		binanceFuture.SetLeverage("XRPUSDT", 1)
 	}
 
-	if positionRisk[0].MarginType != string(futures.MarginTypeCrossed) {
-		binanceFuture.SetMarginType("XRPUSDT", "isolated")
+	if positionRisk[0].MarginType != "isolated" {
+		binanceFuture.SetMarginType("XRPUSDT", futures.MarginTypeIsolated)
 	}
 
 	order, err := binanceFuture.NewBinanceFutureOrder("XRPUSDT", "BUY", "LIMIT", "40", "0.4983")

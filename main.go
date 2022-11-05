@@ -15,10 +15,6 @@ func main() {
 		fmt.Println("Error loading .env file")
 	}
 	//trade.SpotTrade()
-	trade.FutureTrade()
-	// Use Test() instead of Do() for testing.
-
 	logger := record.NewLogger()
-
-	logger.Info("Hello World")
+	trade.FutureTrade(logger)
 }
