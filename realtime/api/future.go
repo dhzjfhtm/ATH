@@ -71,3 +71,13 @@ func (bf *BinanceFuture) SetMarginType(symbol string, marginType futures.MarginT
 	}
 	return nil
 }
+
+// get position risk
+func (bf *BinanceFuture) GetPositionRisk(symbol string) ([]*futures.PositionRisk, error) {
+	positionRisk, err := bf.client.NewGetPositionRiskService().Symbol(symbol).Do(context.Background())
+	if err != nil {
+		return nil, err
+	}
+
+	return positionRisk, nil
+}
