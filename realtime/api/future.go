@@ -50,6 +50,17 @@ func (bf *BinanceFuture) GetBinanceFuturePrice(symbol string) (string, error) {
 	return tickerPrice[0].Price, nil
 }
 
+// get binance klines data
+func (bf *BinanceFuture) GetBinanceFutureKlines(symbol, interval string, limit int) ([]*futures.Kline, error) {
+	klines, err := bf.client.NewKlinesService().Symbol(symbol).Interval(interval).Limit(limit).Do(context.Background())
+	if err != nil {
+		bf.logger.Error("GetBinanceFutureKlines", err)
+		return nil, err
+	}
+
+	return klines, nil
+}
+
 func (bf *BinanceFuture) NewBinanceFutureOrder(symbol, side, orderType, quantity, price string) (*futures.CreateOrderResponse, error) {
 	order, err := bf.client.NewCreateOrderService().Symbol(symbol).
 		Side(futures.SideType(side)).Type(futures.OrderType(orderType)).
