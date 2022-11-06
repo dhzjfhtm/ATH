@@ -1,7 +1,7 @@
 package config
 
 var (
-	symbols = []string{
+	Symbols = []string{
 		"BTCUSDT",
 		"ETHUSDT",
 		"BNBUSDT",
